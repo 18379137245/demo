@@ -22,14 +22,16 @@ public interface AccountMapper {
 
 
     /**
-     * 通过id查询一个用户
+     * 通过id查询一个用户钱包信息
      * @param id
      */
     @Select("select * from account_user_wallet where user_id=#{id}")
-    AccountUserWallet findById(String id);
+    AccountUserWallet findBalByUserId(String id);
 
-
-
-    @Update("UPDATE account_user_wallet SET balance=#{balance},deposits=#{deposits}WHERE user_id=#{userId}")
-    void updateAdd(String userId, BigDecimal balance,BigDecimal deposits);
+    /**
+     * 通过id修改一个用户钱包信息
+     * @param userId
+     */
+    @Update("UPDATE account_user_wallet SET balance=#{balance},deposits=#{deposits} WHERE user_id=#{userId}")
+    void updateUserWallet(String userId, BigDecimal balance,BigDecimal deposits);
 }

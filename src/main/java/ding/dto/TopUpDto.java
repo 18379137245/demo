@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 public class TopUpDto {
     //用户id
     private String userId;
-    private String balanceId = "1";
+    private String status;
     //充值金额
     private BigDecimal balance;
 }

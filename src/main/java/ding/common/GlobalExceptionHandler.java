@@ -13,9 +13,9 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(RuntimeException.class)
-    public String handleDuplicateEntry(RuntimeException ex) {
+    public boolean handleDuplicateEntry(RuntimeException ex) {
         log.error("出现MySQL约束异常", ex);
-        return "余额不足";
+        return false;
     }
 
 }
