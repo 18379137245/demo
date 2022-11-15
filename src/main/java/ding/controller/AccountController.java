@@ -34,10 +34,10 @@ public class AccountController {
      * @return
      */
     @GetMapping("/{userid}")
-    public List<BigDecimal> queryUserWalletBalance(@PathVariable String userid){
+    public List<BigDecimal> getUserWalletBalance(@PathVariable String userid){
         List<BigDecimal> bigDecimals = new ArrayList<>();
         try {
-            AccountUserWallet accountUserWallet = accountService.findBalByUserId(userid);
+            AccountUserWallet accountUserWallet = accountService.getUserWalletBalance(userid);
             bigDecimals.add(accountUserWallet.getBalance());
             bigDecimals.add(accountUserWallet.getDeposits());
         } catch (Exception e) {
@@ -55,8 +55,13 @@ public class AccountController {
      */
     @PostMapping()
     public boolean addBalance(@RequestBody TopUpDto dto){
-        accountService.addBalance(dto);
-        return true;
+        try {
+            accountService.addBalance(dto);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("系统异常前稍后再试");
+        }
     }
 
     /**
@@ -66,8 +71,13 @@ public class AccountController {
      */
     @PostMapping({"/{userid}"})
     public boolean userConsumption(@PathVariable String userid,@RequestBody ShoppingDto dto){
-        accountService.userConsumption(userid,dto);
-        return true;
+        try {
+            accountService.userConsumption(userid,dto);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("系统异常前稍后再试");
+        }
     }
 
     /**
@@ -77,8 +87,13 @@ public class AccountController {
      */
     @PostMapping({"/{userid}/{deposits}"})
     public boolean requestWithdrawal(@PathVariable String userid,@PathVariable BigDecimal deposits){
-        accountService.requestWithdrawal(userid,deposits);
-        return true;
+        try {
+            accountService.requestWithdrawal(userid,deposits);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("系统异常前稍后再试");
+        }
     }
 
     /**
@@ -87,6 +102,11 @@ public class AccountController {
      */
     @GetMapping("query/{userid}")
     public List<AccountDetails> queryChangeDetailsUserWalletAmount(@PathVariable String userid){
-        return accountService.queryChangeDetailsUserWalletAmount(userid);
+        try {
+            return accountService.queryChangeDetailsUserWalletAmount(userid);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("系统异常前稍后再试");
+        }
     }
 }

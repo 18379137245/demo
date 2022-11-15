@@ -13,7 +13,7 @@ public interface AccountService {
     /**
      * 根据用户id查询用户余额
      */
-    AccountUserWallet findBalByUserId(String id);
+    AccountUserWallet getUserWalletBalance(String id);
 
     /**
      * 根据用户id充值金额
@@ -21,15 +21,14 @@ public interface AccountService {
     void addBalance(TopUpDto dto);
 
     /**
-     * 根据用户订单查询商品总金额
-     * 进行一个消费及退款
+     * 根据用户订单查询商品总金额进行一个消费及退款
      */
-    String userConsumption(String userid, ShoppingDto dto);
+    boolean userConsumption(String userid, ShoppingDto dto);
 
     /**
      * 用户申请提现
      */
-    String requestWithdrawal(String userid, BigDecimal deposits);
+    boolean requestWithdrawal(String userid, BigDecimal deposits);
 
     /**
      * 通过用户id查询用户钱包金额变动明细的接口

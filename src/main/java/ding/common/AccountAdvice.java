@@ -46,7 +46,7 @@ public class AccountAdvice {
 
         Object[] args = joinPoint.getArgs();
         String userId = (String)args[0];
-        AccountUserWallet balByUserId = accountMapper.findBalByUserId(userId);
+        AccountUserWallet balByUserId = accountMapper.getUserWalletBalance(userId);
         ShoppingDto dto = (ShoppingDto)args[1];
         AccountDetailsDto accountDetailsDto = BeanHelper.copyProperties(dto, AccountDetailsDto.class);
         accountDetailsDto.setUserId(userId);

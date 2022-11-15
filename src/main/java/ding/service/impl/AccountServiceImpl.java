@@ -38,8 +38,8 @@ public class AccountServiceImpl implements AccountService {
      * 根据用户id查询用户余额
      */
     @Override
-    public AccountUserWallet findBalByUserId(String id) {
-        return accountMapper.findBalByUserId(id);
+    public AccountUserWallet getUserWalletBalance(String id) {
+        return accountMapper.getUserWalletBalance(id);
     }
 
     /**
@@ -50,7 +50,7 @@ public class AccountServiceImpl implements AccountService {
     public void addBalance(TopUpDto dto) {
         try {
             //获取用户余额
-            AccountUserWallet accountUserWallet = accountMapper.findBalByUserId(dto.getUserId());
+            AccountUserWallet accountUserWallet = accountMapper.getUserWalletBalance(dto.getUserId());
             BigDecimal Initial = accountUserWallet.getBalance();
             BigDecimal deposits = accountUserWallet.getDeposits();
             //复制到AccountUserWallet对象中
@@ -62,21 +62,19 @@ public class AccountServiceImpl implements AccountService {
                 //设置新余额
                 userWallet.setBalance(newBalance);
                 userWallet.setDeposits(deposits);
-                //修改数据库信息
-                String userId = userWallet.getUserId();
-                accountMapper.updateUserWallet(userId, userWallet.getBalance(),userWallet.getDeposits());
+
             }else if(dto.getStatus().equals("银行卡余额")){
                 //用当前用户的余额加上要充值的余额
                 BigDecimal newBalance = Initial.add(dto.getBalance());
                 //设置新余额
                 userWallet.setBalance(newBalance);
                 userWallet.setDeposits(deposits.subtract(dto.getBalance()));
-                //修改数据库信息
-                String userId = userWallet.getUserId();
-                accountMapper.updateUserWallet(userId, userWallet.getBalance(),userWallet.getDeposits());
             }else {
                 throw new RuntimeException("状态金额来源有异");
             }
+            //修改数据库信息
+            String userId = userWallet.getUserId();
+            accountMapper.updateUserWallet(userId, userWallet.getBalance(),userWallet.getDeposits());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,15 +89,13 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     @Transactional
-    public String userConsumption(String userid, ShoppingDto dto) {
+    public boolean userConsumption(String userid, ShoppingDto dto) {
         try {
             //获取用户余额
-            AccountUserWallet accountUserWallet = accountMapper.findBalByUserId(userid);
+            AccountUserWallet accountUserWallet = accountMapper.getUserWalletBalance(userid);
             BigDecimal Initial = accountUserWallet.getBalance();
             BigDecimal deposits = accountUserWallet.getDeposits();
             Shopping userWallet = BeanHelper.copyProperties(dto, Shopping.class);
-
-
             if(dto.getStatus().equals("支付")){
                 BigDecimal productPrice = userWallet.getProductPrice();
 
@@ -123,15 +119,15 @@ public class AccountServiceImpl implements AccountService {
                 }
                 //修改数据库信息
                 accountMapper.updateUserWallet(accountUserWallet.getUserId(), accountUserWallet.getBalance(),accountUserWallet.getDeposits());
-                return "支付成功";
+                return true;
             }else if(dto.getStatus().equals("退款")) {
                 BigDecimal productPrice = userWallet.getProductPrice();
                 accountUserWallet.setBalance(productPrice.add(accountUserWallet.getBalance()));
                 //修改数据库信息
                 accountMapper.updateUserWallet(accountUserWallet.getUserId(), accountUserWallet.getBalance(),accountUserWallet.getDeposits());
-                return "支付成功";
+                return true;
             }else {
-                return "参数异常";
+                return false;
             }
         } catch (RuntimeException e) {
             e.printStackTrace();
@@ -144,10 +140,10 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     @Transactional
-    public String requestWithdrawal(String userid, BigDecimal deposits) {
+    public boolean requestWithdrawal(String userid, BigDecimal deposits) {
         try {
             //获取用户余额
-            AccountUserWallet accountUserWallet = accountMapper.findBalByUserId(userid);
+            AccountUserWallet accountUserWallet = accountMapper.getUserWalletBalance(userid);
             BigDecimal balance = accountUserWallet.getBalance();
             BigDecimal subtract= balance;
             if(balance.compareTo(deposits) == 1 || balance.compareTo(deposits) == 0){
@@ -160,7 +156,7 @@ public class AccountServiceImpl implements AccountService {
 
             //修改数据库信息
             accountMapper.updateUserWallet(accountUserWallet.getUserId(), accountUserWallet.getBalance(),accountUserWallet.getDeposits());
-            return "提现成功";
+            return true;
         } catch (RuntimeException e) {
             e.printStackTrace();
             throw new RuntimeException("系统异常前稍后再试");

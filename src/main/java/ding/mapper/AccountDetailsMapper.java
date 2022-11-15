@@ -22,9 +22,8 @@ import java.util.List;
  */
 @Mapper
 public interface AccountDetailsMapper {
-    @Insert("INSERT INTO account_details(details_id,user_id,balance) VALUE(null,#{userId},#{balance})")
-    void insert(String userId, BigDecimal balance);
-
+//    @Insert("INSERT INTO account_details(details_id,user_id,balance) VALUE(null,#{userId},#{balance})")
+//    void insert(String userId, BigDecimal balance);
     /**
      * 通过aop后置增强进行一个明细添加
      * @param dto

@@ -26,7 +26,7 @@ public interface AccountMapper {
      * @param id
      */
     @Select("select * from account_user_wallet where user_id=#{id}")
-    AccountUserWallet findBalByUserId(String id);
+    AccountUserWallet getUserWalletBalance(String id);
 
     /**
      * 通过id修改一个用户钱包信息
