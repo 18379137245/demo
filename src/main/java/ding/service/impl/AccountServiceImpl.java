@@ -47,8 +47,10 @@ public class AccountServiceImpl implements AccountService {
         BigDecimal newBalance = Initial.add(dto.getBalance());
         //设置新余额
         userWallet.setBalance(newBalance);
+        userWallet.setDeposits(deposits);
         //修改数据库信息
-        accountMapper.updateAdd(userWallet.getUserId(), userWallet.getBalance(),userWallet.getDeposits());
+        String userId = userWallet.getUserId();
+        accountMapper.updateAdd(userId, userWallet.getBalance(),userWallet.getDeposits());
     }
 
     @Override
