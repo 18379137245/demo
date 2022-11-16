@@ -2,24 +2,12 @@ package ding.mapper;
 
 import ding.dto.AccountDetailsDto;
 import ding.pojo.AccountDetails;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-
-import java.math.BigDecimal;
 import java.util.List;
 
-/**
- * @projectName: demo
- * @package: ding.mapper
- * @className: accountDetailsMapper
- * @author: DingXingYun
- * @description: TODO
- * @date: 2022/11/14 22:52
- * @version: 1.0
- */
 @Mapper
 public interface AccountDetailsMapper {
 //    @Insert("INSERT INTO account_details(details_id,user_id,balance) VALUE(null,#{userId},#{balance})")

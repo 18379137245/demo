@@ -1,7 +1,6 @@
 package ding.dto;
 
 import lombok.Data;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.math.BigDecimal;
 

@@ -8,15 +8,7 @@ import org.apache.ibatis.annotations.Update;
 import java.math.BigDecimal;
 import java.util.List;
 
-/**
- * @projectName: demo
- * @package: ding.mapper
- * @className: AccountUserWallet
- * @author: DingXingYun
- * @description: TODO
- * @date: 2022/11/14 20:42
- * @version: 1.0
- */
+
 @Mapper
 public interface AccountMapper {
 

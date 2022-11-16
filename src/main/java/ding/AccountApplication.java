@@ -7,15 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
-/**
- * @projectName: 175jiuye
- * @package: com.itheima.reggie
- * @className: ReggieApplication
- * @author: DingXingYun
- * @description: TODO
- * @date: 2022/8/22 9:41
- * @version: 1.0
- */
 @Slf4j
 @SpringBootApplication
 @MapperScan("ding.mapper")
