@@ -56,8 +56,8 @@ public class AccountController {
     @PostMapping()
     public boolean addBalance(@RequestBody TopUpDto dto){
         try {
-            accountService.addBalance(dto);
-            return true;
+
+            return accountService.addBalance(dto);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("系统异常前稍后再试");
@@ -72,8 +72,7 @@ public class AccountController {
     @PostMapping({"/{userid}"})
     public boolean userConsumption(@PathVariable String userid,@RequestBody ShoppingDto dto){
         try {
-            accountService.userConsumption(userid,dto);
-            return true;
+            return accountService.userConsumption(userid,dto);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("系统异常前稍后再试");
@@ -88,8 +87,7 @@ public class AccountController {
     @PostMapping({"/{userid}/{deposits}"})
     public boolean requestWithdrawal(@PathVariable String userid,@PathVariable BigDecimal deposits){
         try {
-            accountService.requestWithdrawal(userid,deposits);
-            return true;
+            return accountService.requestWithdrawal(userid,deposits);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("系统异常前稍后再试");

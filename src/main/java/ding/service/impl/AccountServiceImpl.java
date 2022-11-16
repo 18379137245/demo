@@ -47,7 +47,7 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     @Transactional
-    public void addBalance(TopUpDto dto) {
+    public boolean addBalance(TopUpDto dto) {
         try {
             //获取用户余额
             AccountUserWallet accountUserWallet = accountMapper.getUserWalletBalance(dto.getUserId());
@@ -80,6 +80,7 @@ public class AccountServiceImpl implements AccountService {
             e.printStackTrace();
             throw new RuntimeException("系统异常前稍后再试");
         }
+        return true;
     }
 
 

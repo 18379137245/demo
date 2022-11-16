@@ -18,7 +18,7 @@ public interface AccountService {
     /**
      * 根据用户id充值金额
      */
-    void addBalance(TopUpDto dto);
+    boolean addBalance(TopUpDto dto);
 
     /**
      * 根据用户订单查询商品总金额进行一个消费及退款
